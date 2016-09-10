@@ -5,6 +5,7 @@ from pip import req
 def parse_requirements(filename):
     return [str(ir.req) for ir in req.parse_requirements(filename, session=False)]
 
+__version__ = __import__('quizlet').__version__
 
 setup(
     name='Quizlet API',
