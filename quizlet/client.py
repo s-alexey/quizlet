@@ -4,7 +4,15 @@ from . import entities
 
 BASE_URL = 'https://api.quizlet.com/2.0/'
 
-__all__ = ['QuizletAPI', 'QuizletError', 'BASE_URL']
+__all__ = ['QuizletAPI', 'QuizletError', 'BASE_URL', 'QuizletClient']
+
+
+class QuizletClient:
+    """ A main class that holds a QuizletAPI and some managers. """
+    def __init__(self, *, client_id=None, token=None, login=None):
+        self.api = QuizletAPI(client_id=client_id, token=token, login=login)
+        self.sets = SetManager(self.api)
+        self.classes = ClassManager(self.api)
 
 
 class QuizletError(requests.HTTPError):
