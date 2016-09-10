@@ -7,7 +7,7 @@ def parse_requirements(filename):
 
 
 setup(
-    name='quizlet-api',
+    name='Quizlet API',
     version='0.1',
     author='Aliaksei Sukharevich',
     author_email='suharevichalexey@gmail.com',
