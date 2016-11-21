@@ -9,7 +9,8 @@ __all__ = ['QuizletAPI', 'QuizletError', 'BASE_URL', 'QuizletClient']
 
 class QuizletClient:
     """ A main class that holds a QuizletAPI and some managers. """
-    def __init__(self, *, client_id=None, token=None, login=None):
+
+    def __init__(self, client_id=None, token=None, login=None):
         self.api = QuizletAPI(client_id=client_id, token=token, login=login)
         self.sets = SetManager(self.api)
         self.classes = ClassManager(self.api)
@@ -32,13 +33,13 @@ class QuizletError(requests.HTTPError):
 class QuizletAPI(tortilla.Wrap):
     """ A client for Quizlet API. """
 
-    def __init__(self, *, client_id=None, token=None, login=None, **kwargs):
+    def __init__(self, client_id=None, token=None, login=None, **kwargs):
         kwargs.setdefault('part', BASE_URL)
         if client_id:
             kwargs['params'] = {'client_id': client_id}
         if token:
             kwargs['headers'] = {'Authorization': 'Bearer {}'.format(token)}
-        super().__init__(**kwargs)
+        super(QuizletAPI, self).__init__(**kwargs)
         self.login = login
 
     def __getattr__(self, part):
@@ -62,7 +63,7 @@ class QuizletAPI(tortilla.Wrap):
              HTTPError: If some error occurs in network or on the server.
         """
         try:
-            return super().request(method, *parts, **options)
+            return super(QuizletAPI, self).request(method, *parts, **options)
         except requests.HTTPError as e:
             if 400 <= e.response.status_code < 500:
                 # Do not raise new exception.
@@ -71,7 +72,7 @@ class QuizletAPI(tortilla.Wrap):
 
     def __call__(self, *args, **kwargs):
         """ Replaces result or super class' method with an QuizletAPI analogue."""
-        result = super().__call__(*args, **kwargs)
+        result = super(QuizletAPI, self).__call__(*args, **kwargs)
         result.__class__ = QuizletAPI
         return result
 
@@ -120,7 +121,7 @@ class EntityManager:
         """ Creates a new entity from the retrieved data. """
         return self._entity(data, endpoint=self.endpoint(data['id']))
 
-    def __call__(self, *, id=None, ids=None, **kwargs):
+    def __call__(self, id=None, ids=None, **kwargs):
         """ Returns either user's entities or specified by id(s).
 
         Arguments:
@@ -138,7 +139,7 @@ class EntityManager:
         """ Creates a new entity. """
         return self.new_entity(self.endpoint.post(data=kwargs))
 
-    def search(self, query, *, max_items=None, **params):
+    def search(self, query, max_items=None, **params):
         """ Searches for the public item. """
         endpoint = getattr(self.api.search, self._plural)
         return [self.new_entity(item) for item in
@@ -154,8 +155,8 @@ class SetManager(EntityManager):
 
     def create(self, title, terms, lang_terms, definitions, lang_definitions):
         # Gets the idea of what must be present here.
-        return super().create(title=title, terms=terms, lang_terms=lang_terms,
-                              definitions=definitions, lang_definitions=lang_definitions)
+        return super(SetManager, self).create(title=title, terms=terms, lang_terms=lang_terms,
+                                              definitions=definitions, lang_definitions=lang_definitions)
 
 
 class ClassManager(EntityManager):

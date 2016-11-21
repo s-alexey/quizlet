@@ -12,7 +12,7 @@ class Entity(Bunch):
     """
 
     def __init__(self, kwargs=None, *, endpoint=None):
-        super().__init__(kwargs)
+        super(Entity, self).__init__(kwargs)
         self.endpoint = endpoint
 
     def __repr__(self):
@@ -51,7 +51,7 @@ class Class(Entity):
 
 class User(Entity):
     def __init__(self, name, api):
-        super().__init__()
+        super(User, self).__init__()
         self.endpoint = api.users(name)
         self.name = name
 
