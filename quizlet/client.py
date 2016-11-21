@@ -82,12 +82,17 @@ class QuizletAPI(tortilla.Wrap):
         if isinstance(data, list):
             return data
 
+        item_count = 0
+
         for item in data[self._part]:
             yield item
+            item_count += 1
+
+            if max_items is not None and item_count > max_items:
+                return
 
         params = params or {}
         for page_id in range(2, data['total_pages'] + 1):
-            item_count = 0
             items = self.get(params={'page': page_id, **params})[self._part]
             for item in items:
                 yield item
