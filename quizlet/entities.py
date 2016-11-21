@@ -19,6 +19,11 @@ class Entity(Bunch):
     def __repr__(self):
         return "{cls}({repr})".format(cls=self.__class__.__name__, repr=super().__repr__())
 
+    def to_dict(self):
+        result = dict(self)
+        result.pop('endpoint', None)
+        return result
+
 
 class Set(Entity):
     """ A wrapper for Quizlet Set.
