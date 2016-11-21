@@ -14,6 +14,9 @@ class QuizletClient:
         self.sets = SetManager(self.api)
         self.classes = ClassManager(self.api)
 
+    def user(self, username):
+        return entities.User(username, self.api)
+
 
 class QuizletError(requests.HTTPError):
     """ Custom HTTP exception. """

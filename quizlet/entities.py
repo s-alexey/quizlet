@@ -1,6 +1,6 @@
 from tortilla.utils import Bunch
 
-__all__ = ['Set', 'Class']
+__all__ = ['Set', 'Class', 'User']
 
 
 class Entity(Bunch):
@@ -47,3 +47,26 @@ class Class(Entity):
     def join(self):
         """ Joins the class. """
         return self.endpoint.users(self.endpoint.login).put()
+
+
+class User(Entity):
+    def __init__(self, name, api):
+        super().__init__()
+        self.endpoint = api.users(name)
+        self.name = name
+
+    @property
+    def sets(self):
+        return self.endpoint.sets().get()
+
+    @property
+    def studied(self):
+        return self.endpoint.studied().get()
+
+    @property
+    def classes(self):
+        return self.endpoint.classes().get()
+
+    @property
+    def favorites(self):
+        return self.endpoint.favorites().get()
