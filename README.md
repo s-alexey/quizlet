@@ -1,6 +1,6 @@
 # Quizlet Python API
 
-It is not official Quizlet API wrapper.
+It's an unofficial Quizlet API wrapper.
 
 
 [Documentation](http://quizlet.readthedocs.io/en/latest/)

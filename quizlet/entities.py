@@ -20,6 +20,7 @@ class Entity(Bunch):
         return "{cls}({repr})".format(cls=self.__class__.__name__, repr=super().__repr__())
 
     def to_dict(self):
+        """ Transforms an entity to a pure dict. """
         result = dict(self)
         result.pop('endpoint', None)
         return result
@@ -56,6 +57,14 @@ class Class(Entity):
 
 
 class User(Entity):
+    """ User endpoint wrapper.
+
+    Attributes:
+        sets: A list of user's sets.
+        favorites: Favourite user's sets.
+        studied: A list of user's studying sessions.
+        classes: User's classes.
+    """
     def __init__(self, name, api):
         super(User, self).__init__()
         self.endpoint = api.users(name)

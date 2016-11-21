@@ -31,7 +31,7 @@ It's some sort of a low level of making requests.
 
    client.api.search.sets.get(params={'q': 'Python'})
 
-Here is a simplier analog:
+Here is a simpler analog:
 
 .. code-block:: python
 

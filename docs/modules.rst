@@ -22,3 +22,6 @@ Modules
 .. autoclass:: quizlet.Class
    :members:
 
+.. autoclass:: quizlet.User
+   :members:
+

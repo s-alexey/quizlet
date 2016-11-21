@@ -17,6 +17,7 @@ class QuizletClient:
         self.classes = ClassManager(self.api)
 
     def user(self, username):
+        """ Get :class:`~quizlet.User`'s description. """
         return entities.User(username, self.api)
 
 
@@ -162,7 +163,7 @@ class SetManager(EntityManager):
     _entity = entities.Set
 
     def create(self, title, terms, lang_terms, definitions, lang_definitions):
-        # Gets the idea of what must be present here.
+        # Gives the idea of what must be present here.
         return super(SetManager, self).create(title=title, terms=terms, lang_terms=lang_terms,
                                               definitions=definitions, lang_definitions=lang_definitions)
 
