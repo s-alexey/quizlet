@@ -1,3 +1,4 @@
+from __future__ import unicode_literals, absolute_import
 from tortilla.utils import Bunch
 
 __all__ = ['Set', 'Class', 'User']

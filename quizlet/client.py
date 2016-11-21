@@ -1,3 +1,4 @@
+from __future__ import unicode_literals, absolute_import
 import requests
 import tortilla
 from . import entities
@@ -80,7 +81,7 @@ class QuizletAPI(tortilla.Wrap):
         """ Iterates over items related to this endpoint. """
         data = self.get(params=params)
         if isinstance(data, list):
-            return data
+            raise StopIteration
 
         item_count = 0
 
@@ -89,17 +90,19 @@ class QuizletAPI(tortilla.Wrap):
             item_count += 1
 
             if max_items is not None and item_count > max_items:
-                return
+                raise StopIteration
 
         params = params or {}
         for page_id in range(2, data['total_pages'] + 1):
-            items = self.get(params={'page': page_id, **params})[self._part]
+            params = params.copy()
+            params['page'] = page_id
+            items = self.get(params=params)[self._part]
             for item in items:
                 yield item
                 item_count += 1
 
                 if max_items is not None and item_count > max_items:
-                    return
+                    raise StopIteration
 
     @property
     def user_url(self):
