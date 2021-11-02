@@ -1,9 +1,7 @@
 from setuptools import setup
-from pip import req
 
-
-def parse_requirements(filename):
-    return [str(ir.req) for ir in req.parse_requirements(filename, session=False)]
+with open('requirements.txt') as f:
+    install_requires = f.read().strip().split('\n')
 
 __version__ = __import__('quizlet').__version__
 
@@ -14,7 +12,7 @@ setup(
     author_email='suharevichalexey@gmail.com',
     description='Python wrapper for Quizlet HTTP API.',
     packages=['quizlet'],
-    install_requires=parse_requirements('requirements.txt'),
-    tests_require=parse_requirements('requirements-test.txt'),
+    install_requires=install_requires,
+    tests_require=install_requires,
     test_suite="tests",
 )
